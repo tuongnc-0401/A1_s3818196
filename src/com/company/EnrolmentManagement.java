@@ -4,14 +4,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Scanner;
 
 
 public class EnrolmentManagement implements StudentEnrolmentManager{
     private ArrayList<StudentEnrolment> enrolments = new ArrayList<StudentEnrolment>();
-    private ArrayList<Student> students = new ArrayList<Student>();
-    private ArrayList<Course> courses = new ArrayList<Course>();
-    private ArrayList<String> sems = new ArrayList<String>();
+    private HashSet<Student> students = new HashSet<Student>();
+    private HashSet<Course> courses = new HashSet<Course>();
+    private HashSet<String> sems = new HashSet<String>();
     @Override
     public void add() {
         Scanner input = new Scanner(System.in);
@@ -96,7 +97,24 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
 
     @Override
     public void update() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("=== Update an enrolment of a student for 1 semester ===");
 
+        getAllStudentsInEnrollment();
+        //String sID = inputStudentId(input);
+
+        //String sem = findAllSemOfOneStudentByID(sID);
+
+    }
+
+    private void getAllStudentsInEnrollment() {
+        HashSet<Student> studentsInEnrollment = new HashSet<Student>();
+        for (StudentEnrolment enrollment: enrolments ) {
+                studentsInEnrollment.add(enrollment.getStudent());
+        }
+        for (Student s: studentsInEnrollment) {
+            System.out.println(s);
+        }
     }
 
     @Override
@@ -111,7 +129,11 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
 
     @Override
     public void getAll() {
-
+        System.out.println("================= All enrollments =================");
+        for (StudentEnrolment enrollment: enrolments) {
+            System.out.println(enrollment);
+        }
+        System.out.println("===================================================");
     }
     public void getAllStudents(){
         for (Student s:students) {
