@@ -11,33 +11,77 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     private ArrayList<StudentEnrolment> enrolments = new ArrayList<StudentEnrolment>();
     private ArrayList<Student> students = new ArrayList<Student>();
     private ArrayList<Course> courses = new ArrayList<Course>();
+    private ArrayList<String> sems = new ArrayList<String>();
     @Override
     public void add() {
         Scanner input = new Scanner(System.in);
         System.out.println("=== Enroll a student for 1 semester ===");
         getAllStudents();
         String sID = inputStudentId(input);
-        Student s = getStudentByID(sID);
+        Student student = getStudentByID(sID);
+
         getAllCourse();
         String cID = inputCourseId(input);
-        
-        
+        Course course = getCourseByID(cID);
+
+        getAllSems();
+        String sem = inputSem(input);
+
+        // new  student enrollment
+        StudentEnrolment enrolment = new StudentEnrolment(student, course, sem);
+        if (enrolments.contains(enrolment)){
+            System.out.println("Enroll failed!!");
+            System.out.println("This student has already enrolled this course in this semester!!");
+        } else {
+            enrolments.add(enrolment);
+            System.out.println("Enroll successfully!!");
+        }
+    }
+
+    private String inputSem(Scanner input) {
+        String sem;
+        while (true){
+            System.out.print("Enter a sem: ");
+            sem = input.nextLine();
+            if (sems.contains(sem))
+                return sem;
+            System.out.println("!! This semester is not in System, please enter again!! ");
+
+        }
+    }
+
+    private void getAllSems() {
+        for (String s:sems) {
+            System.out.println(s);
+        }
+    }
+
+    private Course getCourseByID(String cID) {
+        for (Course c: courses) {
+            if (c.getcID().equals(cID)){
+                return c;
+            }
+        }
+        return null;
     }
 
     private void getAllCourse() {
+        for (Course c: courses) {
+            System.out.println(c);
+        }
     }
 
     private String inputCourseId(Scanner input) {
         String id;
         while (true){
-            System.out.print("Choose a course: ");
+            System.out.print("Enter a course id: ");
             id = input.nextLine();
             for (Course c: courses) {
                 if (c.getcID().equals(id))
                     return id;
             }
 
-            System.out.println("!! Course id is not in System, please enter again!! ");
+            System.out.println("!! This course id is not in System, please enter again!! ");
 
         }
     }
@@ -47,6 +91,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             if (s.getsID().equals(id))
                 return s;
         }
+        return null;
     }
 
     @Override
@@ -88,6 +133,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         courses.add(course2);
         courses.add(course3);
 
+        sems.add("2021A");
+        sems.add("2021B");
+        sems.add("2021C");
     }
 
     /**
@@ -123,14 +171,14 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     private String inputStudentId(Scanner input) {
         String id;
         while (true){
-            System.out.print("Choose a student: ");
+            System.out.print("Enter a student id: ");
             id = input.nextLine();
             for (Student s: students) {
                 if (s.getsID().equals(id))
                         return id;
             }
             
-            System.out.println("!! Student id is not in System, please enter again!! ");
+            System.out.println("!! This student id is not in System, please enter again!! ");
             
         }
     }

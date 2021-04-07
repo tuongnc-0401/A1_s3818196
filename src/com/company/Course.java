@@ -41,10 +41,6 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "cID='" + cID + '\'' +
-                ", cName='" + cName + '\'' +
-                ", numOfCredits=" + numOfCredits +
-                '}';
+        return cID + " " + cName +" " + numOfCredits;
     }
 }
