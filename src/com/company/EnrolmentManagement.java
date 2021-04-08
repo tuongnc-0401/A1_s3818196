@@ -211,7 +211,27 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
     }
     public EnrolmentManagement() {
-        loadFile("default.csv");
+
+        String fileName = inputFileName();
+        loadFile(fileName);
+    }
+    private String inputFileName(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("Do you want load the enrolments from any file? (Y/N): ");
+        String id;
+        String fileName = "default.csv";
+        id = input.nextLine();
+        while (!id.equals("Y") && !id.equals("N")){
+            System.out.println("Incorrect character.Please enter again!!");
+            System.out.print("Do you want load the enrolments from any file? (Y/N): ");
+            id = input.nextLine();
+        }
+        if (id.equals("Y")){
+            System.out.print("Enter name of file: ");
+            fileName = input.nextLine();
+            return fileName;
+        }
+        return fileName;
     }
     private void loadFile(String fileName){
         Scanner scanner = null;
@@ -219,6 +239,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             scanner = new Scanner(new File(fileName));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            System.out.println("Can not find "+ fileName + " file");
         }
         while(scanner.hasNext()){
             String line =  scanner.nextLine();
