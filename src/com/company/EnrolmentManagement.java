@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -209,9 +211,41 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
     }
     public EnrolmentManagement() {
-        Student stu1 = new Student("s001","Nguyen Van A",stringToDate("2000-01-01"));
-        Student stu2 = new Student("s002","Nguyen Van B",stringToDate("2000-02-01"));
-        Student stu3 = new Student("s003","Nguyen Van C",stringToDate("2000-03-01"));
+        loadFile("default.csv");
+    }
+    private void loadFile(String fileName){
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while(scanner.hasNext()){
+            String line =  scanner.nextLine();
+            String[] tokens = line.split(",");
+
+            //using StringTokenizer
+            // add student
+            Student student = new Student(tokens[0], tokens[1], tokens[2]);
+            students.add(student);
+            // add course
+            Course course = new Course(tokens[3], tokens[4],Integer.parseInt(tokens[5]));
+            courses.add(course);
+            // add sem
+            String sem = tokens[6];
+            sems.add(sem);
+            // add enrollment
+            StudentEnrolment enrolment = new StudentEnrolment(student, course, sem);
+            enrolments.add(enrolment);
+
+        }
+        scanner.close();
+    }
+
+    private void createData() {
+        Student stu1 = new Student("s001","Nguyen Van A","2000/01/01");
+        Student stu2 = new Student("s002","Nguyen Van B","2000/01/01");
+        Student stu3 = new Student("s003","Nguyen Van C","2000/01/01");
         students.add(stu1);
         students.add(stu2);
         students.add(stu3);
@@ -226,34 +260,6 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         sems.add("2021A");
         sems.add("2021B");
         sems.add("2021C");
-    }
-
-    /**
-     * format a string to a date
-     * @param orgDate
-     * @return Date
-     */
-    public static Date stringToDate(String orgDate) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = simpleDateFormat.parse(orgDate);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
-
-    /**
-     * convert a date into a string
-     * @param date
-     * @return String
-     */
-    public static String dateToString(Date date){
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(date);
     }
 
 
