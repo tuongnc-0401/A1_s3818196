@@ -4,8 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
 	EnrolmentManagement enrolmentManagement = new EnrolmentManagement();
-
-	enrolmentManagement.getAllStudents();
+    enrolmentManagement.update();
+	//enrolmentManagement.delete();
+	enrolmentManagement.printAllEnrollment();
 
     }
 }

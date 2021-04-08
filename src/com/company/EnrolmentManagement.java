@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.xml.transform.Source;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -27,13 +28,24 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
 
         // new  student enrollment
         StudentEnrolment enrolment = new StudentEnrolment(student, course, sem);
-        if (enrolments.contains(enrolment)){
+
+        if (!checkDuplicate(enrolment)){
             System.out.println("Enroll failed!!");
             System.out.println("This student has already enrolled this course in this semester!!");
         } else {
             enrolments.add(enrolment);
             System.out.println("Enroll successfully!!");
         }
+    }
+
+    private boolean checkDuplicate(StudentEnrolment enrolment) {
+
+        for (StudentEnrolment se: enrolments) {
+            if (se.getStudent().getsID().equals(enrolment.getStudent().getsID()) && se.getSemester().equals(enrolment.getSemester()) && se.getCourse().getcID().equals(enrolment.getCourse().getcID())){
+                return false;
+            }
+        }
+        return true;
     }
 
     private String inputSem(Scanner input, HashSet<String> semsList) {
@@ -97,48 +109,99 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         Scanner input = new Scanner(System.in);
         System.out.println("=== Update an enrolment of a student for 1 semester ===");
 
-        ArrayList<Student> studentsList = getAllStudentsInEnrollment();
-        String sID = inputStudentId(input, studentsList);
+        getAllStudents();
+        String sID = inputStudentId(input, students);
+        Student student = getStudentByID(sID);
         
-        HashSet<String> studentSems = getAllSemsBysID(sID);
-        String sem = inputSem(input, studentSems);
 
-        ArrayList<Course> coursesList = getAllCourseOfOneStudent(sID,sem);
-        System.out.println("Choose the course to update.");
-        String oldCourseID = inputCourseId(input,coursesList);
+        ArrayList<Course> coursesList = getAllCourseOfOneStudent(sID);
+        System.out.println("List of courses of student "+ sID);
+        for (Course c1: coursesList) {
+            System.out.println(c1);
+        }
 
-        System.out.println("List of courses: ");
-        getAllCourse();
-        System.out.println("Choose a new course.");
-        String newCourseID = inputCourseId(input, courses);
-        // update course
-        if (oldCourseID.equals(newCourseID)){
-            System.out.println("Update failed!!");
-            System.out.println("New course is the same as old course");
-        } else {
-            Course newCourse = getCourseByID(newCourseID);
+        int choice = inputUpdateChoice(input);
+        if (choice == 1){
+            System.out.println("List of courses of student "+ sID);
+            for (Course c1: coursesList) {
+                System.out.println(c1);
+            }
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Choose a course to delete.");
+            String oldCourseID = inputCourseId(sc,coursesList);
             for (StudentEnrolment enrollment: enrolments) {
-                if (enrollment.getStudent().getsID().equals(sID) && enrollment.getSemester().equals(sem)){
-                    enrollment.setCourse(newCourse);
-                    System.out.println("Update successfully");
+                if (enrollment.getStudent().getsID().equals(sID) && enrollment.getCourse().getcID().equals(oldCourseID)){
+                    enrolments.remove(enrollment);
+                    System.out.println("Delete successfully");
+                    break;
                 }
             }
+
         }
 
+        if (choice == 2){
+            System.out.println("List of new courses to add: ");
+            ArrayList<Course> newCoursesList = getAllCourseBySId(sID);
+            for (Course c1: newCoursesList) {
+                System.out.println(c1);
+            }
+            System.out.println("Choose a new course to add.");
+            Scanner scanner1 = new Scanner(System.in);
+            String newCourseID = inputCourseId(scanner1, newCoursesList);
+            Course newCourse = getCourseByID(newCourseID);
+
+            getAllSems();
+            String sem = inputSem(scanner1,sems);
+
+
+            StudentEnrolment newEnrollment = new StudentEnrolment(student, newCourse, sem);
+            enrolments.add(newEnrollment);
+
+            System.out.println("Add successfully!!");
+        }
     }
 
-    private ArrayList<Course> getAllCourseOfOneStudent(String sID, String sem) {
-        ArrayList<Course> coursesList = new ArrayList<Course>();
-        for (StudentEnrolment enrollment: enrolments) {
-            if (enrollment.getStudent().getsID().equals(sID) && enrollment.getSemester().equals(sem)){
-                coursesList.add(enrollment.getCourse());
-            }
+    private int inputUpdateChoice(Scanner input) {
+        System.out.println("what do you want to do?");
+        System.out.println("1. delete");
+        System.out.println("2. add");
+        System.out.print("Your choice: ");
+        int choice;
+        choice = input.nextInt();
+        while (choice != 1 && choice != 2){
+            System.out.println("Incorrect input. Please enter your choice again: ");
+            choice = input.nextInt();
         }
-        for (Course c: coursesList) {
-            System.out.println(c);
+        return choice;
+    }
+
+    private ArrayList<Course> getAllCourseBySId(String sID) {
+        ArrayList<Course> newCourseList = new ArrayList<Course>();
+        for (Course c:courses) {
+            boolean flag = true;
+            for (StudentEnrolment se: enrolments) {
+                if (c.getcID().equals(se.getCourse().getcID()) && se.getStudent().getsID().equals(sID)){
+                    flag =false;
+                }
+            }
+            if (flag){
+                newCourseList.add(c);
+            }
+
+        }
+        return newCourseList;
+    }
+
+    private ArrayList<Course> getAllCourseOfOneStudent(String sID) {
+        ArrayList<Course> coursesList = new ArrayList<Course>();
+        for (StudentEnrolment se: enrolments  ) {
+            if (se.getStudent().getsID().equals(sID)){
+                coursesList.add(se.getCourse());
+            }
         }
         return coursesList;
     }
+
 
     private HashSet<String> getAllSemsBysID(String sID) {
         HashSet<String> studentSems = new HashSet<String>();
@@ -169,22 +232,23 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     public void delete() {
         Scanner input = new Scanner(System.in);
         System.out.println("=== Delete an enrolment of a student for 1 semester ===");
+        printAllEnrollment();
+        int indexRemove = inputIndexRemove(input);
+        enrolments.remove(enrolments.get(indexRemove-1));
+        System.out.println("Delete this enrollment successfully !!");
 
-        ArrayList<Student> studentsList = getAllStudentsInEnrollment();
-        String sID = inputStudentId(input, studentsList);
+    }
 
-        HashSet<String> studentSems = getAllSemsBysID(sID);
-        String sem = inputSem(input, studentSems);
-
-        ArrayList<Course> coursesList = getAllCourseOfOneStudent(sID,sem);
-        System.out.println("Choose the course to delete.");
-        String oldCourseID = inputCourseId(input,coursesList);
-
-        for (StudentEnrolment enrollment: enrolments) {
-            if (enrollment.getStudent().getsID().equals(sID) && enrollment.getSemester().equals(sem)){
-                enrolments.remove(enrollment);
-            }
+    private int inputIndexRemove(Scanner input) {
+        System.out.print("Enter a number of enrollment: ");
+        int num;
+        num = input.nextInt();
+        while (num<1 || num > enrolments.size()){
+            System.out.println("!! The number of enrollment you choose is not in system ");
+            System.out.print("Enter a number of enrollment again: ");
+            num = input.nextInt();
         }
+        return num;
     }
 
     @Override
@@ -196,9 +260,11 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     public List<StudentEnrolment> getAll() {
         return enrolments;
     }
-    public void printAll() {
+    public void printAllEnrollment() {
+        int count = 1;
         System.out.println("================= All enrollments =================");
         for (StudentEnrolment enrollment: enrolments) {
+            System.out.print(count++ +". ");
             System.out.println(enrollment);
         }
         System.out.println("===================================================");
