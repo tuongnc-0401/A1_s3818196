@@ -29,11 +29,15 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         StudentEnrolment enrolment = new StudentEnrolment(student, course, sem);
 
         if (!checkDuplicate(enrolment)){
-            System.out.println("Enroll failed!!");
+            System.out.println("!!-----------------!!");
+            System.out.println("!!  Enroll failed  !!");
+            System.out.println("!!-----------------!!");
             System.out.println("This student has already enrolled this course in this semester!!");
         } else {
             enrolments.add(enrolment);
-            System.out.println("Enroll successfully!!");
+            System.out.println("|-----------------------|");
+            System.out.println("|  Enroll successfully  |");
+            System.out.println("|-----------------------|");
         }
     }
 
@@ -131,7 +135,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             for (StudentEnrolment enrollment: enrolments) {
                 if (enrollment.getStudent().getsID().equals(sID) && enrollment.getCourse().getcID().equals(oldCourseID)){
                     enrolments.remove(enrollment);
-                    System.out.println("Delete successfully");
+                    System.out.println("|-----------------------|");
+                    System.out.println("|  Delete successfully  |");
+                    System.out.println("|-----------------------|");
                     break;
                 }
             }
@@ -156,8 +162,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
 
             StudentEnrolment newEnrollment = new StudentEnrolment(student, newCourse, sem);
             enrolments.add(newEnrollment);
-
-            System.out.println("Add successfully!!");
+            System.out.println("|--------------------|");
+            System.out.println("|  Add successfully  |");
+            System.out.println("|--------------------|");
         }
     }
 
@@ -244,7 +251,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         int num;
         num = input.nextInt();
         while (num<1 || num > enrolments.size()){
-            System.out.println("!! The number of enrollment you choose is not in system ");
+            System.out.println("!! The number of enrollment you choose is not in system !!");
             System.out.print("Enter a number of enrollment again: ");
             num = input.nextInt();
         }
@@ -262,12 +269,12 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     }
     public void printAllEnrollment() {
         int count = 1;
-        System.out.println("================= All enrollments =================");
+        System.out.println("====================== All enrollments ======================");
         for (StudentEnrolment enrollment: enrolments) {
             System.out.print(count++ +". ");
             System.out.println(enrollment);
         }
-        System.out.println("===================================================");
+        System.out.println("=============================================================");
     }
     public void getAllStudents(){
         for (Student s:students) {
@@ -356,7 +363,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     }
 
     public void printAllCourseOneStudentOneSem() {
-        String report = "";
+        String report = "All courses of one student in one semester\n";
         for (String sem : sems) {
             report += "++++++++ Semester: " + sem + " ++++++++++++++++++\n";
 
@@ -383,9 +390,11 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             }
         }
         System.out.println(report);
+        String fileName = "report1.csv";
+        askWriteFile(report, fileName);
     }
     public void printAllStudentOfOneCourseInOneSem() {
-        String report = "";
+        String report = "All students of one course in one semester\n";
         for (String sem : sems) {
             report += "++++++++ Semester: " + sem + " ++++++++++++++++++\n";
 
@@ -408,6 +417,8 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             }
         }
         System.out.println(report);
+        String fileName = "report2.csv";
+        askWriteFile(report, fileName);
     }
 
     public void printAllCourseInOneSem(){
@@ -451,7 +462,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
         if (input == 1){
             writeToFile(fileName,report,false);
-            System.out.println("Write to file successfully!");
+            System.out.println("|------------------------------|");
+            System.out.println("|  Write to file successfully  |");
+            System.out.println("|------------------------------|");
         } else {
             return;
         }
