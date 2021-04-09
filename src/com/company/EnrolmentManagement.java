@@ -178,13 +178,13 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
     private ArrayList<Course> getAllCourseBySId(String sID) {
         ArrayList<Course> newCourseList = new ArrayList<Course>();
         for (Course c:courses) {
-            boolean flag = true;
+            boolean flags = true;
             for (StudentEnrolment se: enrolments) {
                 if (c.getcID().equals(se.getCourse().getcID()) && se.getStudent().getsID().equals(sID)){
-                    flag =false;
+                    flags =false;
                 }
             }
-            if (flag){
+            if (flags){
                 newCourseList.add(c);
             }
 
