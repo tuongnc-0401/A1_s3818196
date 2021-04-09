@@ -37,19 +37,11 @@ public class Student {
         this.sDOB = sDOB;
     }
 
-    public Student() {
-
-    }
+    public Student() {  }
 
     @Override
     public String toString() {
         return sID+ " " + sName + " " + sDOB;
-    }
-
-    public boolean duplicate(Student student) {
-        if (this.sID.equals(student.getsID()) && this.sName.equals(student.getsName()) && this.sDOB.equals(student.getsDOB()))
-            return true;
-        return false;
     }
 
 }
