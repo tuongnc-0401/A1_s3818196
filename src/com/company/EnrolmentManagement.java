@@ -1,8 +1,7 @@
 package com.company;
 
 import javax.xml.transform.Source;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
 
@@ -140,7 +139,8 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
 
         if (choice == 2){
-            System.out.println("List of new courses to add: ");
+            System.out.println("==================================================");
+            System.out.println("List of new courses which students did not learn yet: ");
             ArrayList<Course> newCoursesList = getAllCourseBySId(sID);
             for (Course c1: newCoursesList) {
                 System.out.println(c1);
@@ -354,26 +354,130 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
             courses.add(course);
         }
     }
-    private void createData() {
-        Student stu1 = new Student("s001","Nguyen Van A","2000/01/01");
-        Student stu2 = new Student("s002","Nguyen Van B","2000/01/01");
-        Student stu3 = new Student("s003","Nguyen Van C","2000/01/01");
-        students.add(stu1);
-        students.add(stu2);
-        students.add(stu3);
 
-        Course course1 = new Course("c001", "programming 1",12);
-        Course course2 = new Course("c002", "programming 2",12);
-        Course course3 = new Course("c003", "programming 3",12);
-        courses.add(course1);
-        courses.add(course2);
-        courses.add(course3);
+    public void printAllCourseOneStudentOneSem() {
+        String report = "";
+        for (String sem : sems) {
+            report += "++++++++ Semester: " + sem + " ++++++++++++++++++\n";
 
-        sems.add("2021A");
-        sems.add("2021B");
-        sems.add("2021C");
+            for (Student s: students) {
+                 boolean checkStudent =false;
+                 ArrayList<Course> coursesList = new ArrayList<Course>();
+                for (StudentEnrolment se: enrolments) {
+                    if (se.getSemester().equals(sem) && se.getStudent().getsID().equals(s.getsID())){
+                        checkStudent = true;
+                        coursesList.add(se.getCourse());
+                    }
+                }
+
+                if (checkStudent){
+                    report+="Student :" +s.getsID() +" " + s.getsName() +"\n";
+                    for (Course c:coursesList  ) {
+                            report+= "\t\t"+ c +"\n";
+                    }
+                }
+
+
+
+
+            }
+        }
+        System.out.println(report);
+    }
+    public void printAllStudentOfOneCourseInOneSem() {
+        String report = "";
+        for (String sem : sems) {
+            report += "++++++++ Semester: " + sem + " ++++++++++++++++++\n";
+
+            for (Course c: courses) {
+                boolean checkCourse =false;
+                ArrayList<Student> studentsList = new ArrayList<Student>();
+                for (StudentEnrolment se: enrolments) {
+                    if (se.getSemester().equals(sem) && se.getCourse().getcID().equals(c.getcID())){
+                        checkCourse = true;
+                        studentsList.add(se.getStudent());
+                    }
+                }
+
+                if (checkCourse){
+                    report+="Course :" + c +"\n";
+                    for (Student s:studentsList  ) {
+                        report+= "\t\t"+ s.getsName() +" "+s.getsID() +"\n";
+                    }
+                }
+            }
+        }
+        System.out.println(report);
     }
 
+    public void printAllCourseInOneSem(){
+        String report = "All courses in one semester\n";
+        for (String sem : sems) {
+            report += "++++++++ Semester: " + sem + " ++++++++++++++++++\n";
+
+            for (Course c: courses) {
+                boolean checkCourse =false;
+
+                for (StudentEnrolment se: enrolments) {
+                    if (se.getSemester().equals(sem) && se.getCourse().getcID().equals(c.getcID())){
+                        checkCourse = true;
+                    }
+                }
+
+                if (checkCourse){
+                    report+="Course :" + c +"\n";
+                }
+            }
+        }
+        System.out.println(report);
+        String fileName = "report3.csv";
+
+        askWriteFile(report, fileName);
+
+    }
+
+    private void askWriteFile(String report, String fileName) {
+        System.out.println(" Do you want to write this report into csv ?");
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        System.out.print("Your choice: ");
+        Scanner sc = new Scanner(System.in);
+        int input;
+        input = sc.nextInt();
+        while (input != 1 && input != 2){
+            System.out.println("Incorrect input. Please choose again!");
+            System.out.print("Your choice: ");
+            input = sc.nextInt();
+        }
+        if (input == 1){
+            writeToFile(fileName,report,false);
+            System.out.println("Write to file successfully!");
+        } else {
+            return;
+        }
+    }
+
+    /**
+            * write a line to file
+     * @param fileName
+     * @param line
+     * @param append
+     */
+    public static void writeToFile(String fileName, String line, boolean append) {
+        PrintWriter output = null;
+        try {
+            output = new PrintWriter(new FileWriter(fileName, append));
+            output.println(line);
+        }
+        catch(IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+        finally {
+            if (output != null)
+                output.close();
+        }
+
+    }
 
     // input  Student id
     private String inputStudentId(Scanner input, ArrayList<Student> studentsList) {

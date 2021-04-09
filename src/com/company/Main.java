@@ -4,9 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
 	EnrolmentManagement enrolmentManagement = new EnrolmentManagement();
-    enrolmentManagement.update();
+    //enrolmentManagement.update();
 	//enrolmentManagement.delete();
-	enrolmentManagement.printAllEnrollment();
+    enrolmentManagement.printAllCourseInOneSem();
+	//enrolmentManagement.printAllEnrollment();
 
     }
 }
