@@ -462,9 +462,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
         if (input == 1){
             writeToFile(fileName,report,false);
-            System.out.println("|------------------------------|");
-            System.out.println("|  Write to file successfully  |");
-            System.out.println("|------------------------------|");
+            System.out.println("|------------------------------------------|");
+            System.out.println("|  Write to file "+fileName+" successfully  |");
+            System.out.println("|------------------------------------------|");
         } else {
             return;
         }
@@ -491,6 +491,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager{
         }
 
     }
+
 
     // input  Student id
     private String inputStudentId(Scanner input, ArrayList<Student> studentsList) {

@@ -6,8 +6,6 @@ public class Main {
     private static EnrolmentManagement enrolmentManagement = new EnrolmentManagement();
     public static void main(String[] args) {
         mainMenu();
-
-
     }
 
 
@@ -24,24 +22,24 @@ public class Main {
         System.out.print("Choose number (1-3): ");
         Scanner input = new Scanner(System.in);
         // ask user to choose option
-        int number = input.nextInt();
-        while (number != 1 && number != 2 && number != 3){
+        String number = input.nextLine().trim();
+        while (!number.equals("1") && !number.equals("2") && !number.equals(3)){
             System.out.println("Your input is incorrect! Please choose a number from 1 to 4!");
             System.out.print("Choose number (1-3): ");
-            number = input.nextInt();
+            number = input.nextLine().trim();
         }
 
         // if user chooses 1, run enrollment menu
-        if (number == 1){
+        if (number.equals("1")){
             enrollmentMenu();
         }
         // if user chooses 2, run report menu
-        if (number == 2){
+        if (number.equals("2")){
             reportMenu();
         }
 
         // if user chooses 3, exit the program
-        if (number == 3){
+        if (number.equals("3")){
             return;
         }
 
@@ -59,33 +57,34 @@ public class Main {
         // Ask user, choose number to do
         System.out.print("Choose number (1-6): ");
         Scanner input = new Scanner(System.in);
-        int number = input.nextInt();
-        while (number < 1 || number >6){
+        String number = input.nextLine().trim();
+        while (!number.equals("1") && !number.equals("2") && !number.equals(3) && !number.equals(
+                "4") && !number.equals("5") && !number.equals("6")){
             System.out.println("Your input is incorrect! Please choose a number from 1 to 6!");
             System.out.print("Choose number (1-6): ");
-            number = input.nextInt();
+            number = input.nextLine().trim();
         }
 
-        if (number == 1){
+        if (number.equals("1")){
             enrolmentManagement.printAllEnrollment();
             backToMenu(2);
         }
-        if (number == 2){
+        if (number.equals("2")){
             enrolmentManagement.add();
             backToMenu(2);
         }
-        if (number == 3){
+        if (number.equals("3")){
             enrolmentManagement.delete();
             backToMenu(2);
         }
-        if (number == 4){
+        if (number.equals("4")){
             enrolmentManagement.update();
             backToMenu(2);
         }
-        if (number == 5){
+        if (number.equals("5")){
             mainMenu();
         }
-        if (number == 6){
+        if (number.equals("6")){
             return;
         }
     }
@@ -100,29 +99,30 @@ public class Main {
         // Ask user, choose number to do
         System.out.print("Choose number (1-5): ");
         Scanner input = new Scanner(System.in);
-        int number = input.nextInt();
-        while (number < 1 || number >5){
-            System.out.println("Your input is incorrect! Please choose a number from 1 to 6!");
-            System.out.print("Choose number (1-6): ");
-            number = input.nextInt();
+        String number = input.nextLine();
+        while (!number.equals("1") && !number.equals("2") && !number.equals(3) && !number.equals(
+                "4") && !number.equals("5")){
+            System.out.println("Your input is incorrect! Please choose a number from 1 to 5!");
+            System.out.print("Choose number (1-5): ");
+            number = input.nextLine();
         }
 
-        if (number == 1){
+        if (number.equals("1")){
             enrolmentManagement.printAllCourseOneStudentOneSem();
             backToMenu(3);
         }
-        if (number == 2){
+        if (number.equals("2")){
             enrolmentManagement.printAllStudentOfOneCourseInOneSem();
             backToMenu(3);
         }
-        if (number == 3){
+        if (number.equals("3")){
             enrolmentManagement.printAllCourseInOneSem();
             backToMenu(3);
         }
-        if (number == 4){
+        if (number.equals("4")){
             mainMenu();
         }
-        if (number == 5){
+        if (number.equals("5")){
             return;
         }
     }
