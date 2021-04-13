@@ -5,11 +5,7 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 public class TestLogic {
 	private static EnrolmentManagement enrolmentManagement = new EnrolmentManagement("default.csv");
@@ -83,7 +79,12 @@ public class TestLogic {
 
 	@Test
 	public void testGetOne() {
-		assertEquals(enrolment.toString(),enrolmentManagement.getOne(1).toString());
+		ByteArrayInputStream in = new ByteArrayInputStream("S103192\nBUS2232\n2020B".getBytes());
+		System.setIn(in);
+		StudentEnrolment se =enrolmentManagement.getOne();
+		assertEquals("Student: S103192 Ngan Thu Vo 3/09/1998. Course: BUS2232 Business Law 3. " +
+				"Semester: 2020B",se.toString());
+
 	}
 
 	@Test
@@ -152,6 +153,10 @@ public class TestLogic {
 		assertEquals("01/01/1998",student.getsDOB());
 	}
 
+	@Test
+	public void testToStringStudent(){
+		assertEquals("S102732 Mark Duong 01/01/1998",student.toString());
+	}
 	/**
 	 * Test class COURSE
 	 */
@@ -209,7 +214,7 @@ public class TestLogic {
 		assertEquals(student1.toString(),enrolment1.getStudent().toString());
 	}
 	@Test
-	public void	testSetSudent(){
+	public void	testSetStudent(){
 		Student student2 = new Student("S102732", "Mark Duong", "8/28/2001");
 		StudentEnrolment se = new StudentEnrolment();
 		se.setStudent(student2);

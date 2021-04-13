@@ -51,20 +51,21 @@ public class Main {
     public static void enrollmentMenu() {
         System.out.println("------- Student Enrollment Menu----------");
         System.out.println("1. View all enrollments.");
-        System.out.println("2. Add a new enrollment.");
-        System.out.println("3. Delete an enrollment.");
-        System.out.println("4. Update an enrollment");
-        System.out.println("5. Back to main menu");
-        System.out.println("6. Exit");
+        System.out.println("2. View one enrollment");
+        System.out.println("3. Add a new enrollment.");
+        System.out.println("4. Delete an enrollment.");
+        System.out.println("5. Update an enrollment");
+        System.out.println("6. Back to main menu");
+        System.out.println("7. Exit");
         System.out.println("----------------------------------------");
         // Ask user, choose number to do
-        System.out.print("Choose number (1-6): ");
+        System.out.print("Choose number (1-7): ");
         Scanner input = new Scanner(System.in);
         String number = input.nextLine().trim();
         while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals(
-                "4") && !number.equals("5") && !number.equals("6")) {
-            System.out.println("Your input is incorrect! Please choose a number from 1 to 6!");
-            System.out.print("Choose number (1-6): ");
+                "4") && !number.equals("5") && !number.equals("6") && !number.equals("7")) {
+            System.out.println("Your input is incorrect! Please choose a number from 1 to 7!");
+            System.out.print("Choose number (1-7): ");
             number = input.nextLine().trim();
         }
 
@@ -74,21 +75,26 @@ public class Main {
             backToMenu(2);
         }
         if (number.equals("2")) {
-            enrolmentManagement.add();
+
+            System.out.println("***Enrollment***\n"+enrolmentManagement.getOne());
             backToMenu(2);
         }
         if (number.equals("3")) {
-            enrolmentManagement.delete();
+            enrolmentManagement.add();
             backToMenu(2);
         }
         if (number.equals("4")) {
-            enrolmentManagement.update();
+            enrolmentManagement.delete();
             backToMenu(2);
         }
         if (number.equals("5")) {
-            mainMenu();
+            enrolmentManagement.update();
+            backToMenu(2);
         }
         if (number.equals("6")) {
+            mainMenu();
+        }
+        if (number.equals("7")) {
             return;
         }
     }

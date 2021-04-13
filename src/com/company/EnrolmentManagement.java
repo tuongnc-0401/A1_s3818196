@@ -140,8 +140,44 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
      * @return an enrollment
      */
     @Override
-    public StudentEnrolment getOne(int index) {
-        return enrolments.get(index);
+    public StudentEnrolment getOne() {
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("=== Get One Enrollment ===");
+
+        getAllStudents();
+        String sID = inputStudentId(input, students);
+        Student student = getStudentByID(sID);
+
+        ArrayList<Course> coursesList = getAllCourseOfOneStudent(sID);
+        System.out.println("List of courses of student " + sID);
+        for (Course c1 : coursesList) {
+            System.out.println(c1);
+        }
+
+        String newCourseID = inputCourseId(input, coursesList);
+        Course newCourse = getCourseByID(newCourseID);
+
+        HashSet<String> newSems = getSemsOfOneStudent(sID,newCourseID);
+        System.out.println("List of sems of " + newCourseID + " of " + sID);
+        for (String s: newSems) {
+            System.out.println(s);
+        }
+        String sem = inputSem(input, newSems);
+
+        StudentEnrolment se = new StudentEnrolment(student,newCourse,sem);
+        return se;
+
+    }
+
+    private HashSet<String> getSemsOfOneStudent(String sID, String newCourseID) {
+        HashSet<String> lists = new HashSet<String>();
+        for (StudentEnrolment se: enrolments) {
+            if (se.getCourse().getcID().equals(newCourseID) && se.getStudent().getsID().equals(sID)){
+                lists.add(se.getSemester());
+            }
+        }
+        return lists;
     }
 
     /**
