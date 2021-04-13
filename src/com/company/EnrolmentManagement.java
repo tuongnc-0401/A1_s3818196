@@ -81,9 +81,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
             for (Course c1 : coursesList) {
                 System.out.println(c1);
             }
-            Scanner sc = new Scanner(System.in);
+            //Scanner sc = new Scanner(System.in);
             System.out.println("Choose a course to delete.");
-            String oldCourseID = inputCourseId(sc, coursesList);
+            String oldCourseID = inputCourseId(input, coursesList);
             for (StudentEnrolment enrollment : enrolments) {
                 if (enrollment.getStudent().getsID().equals(sID) && enrollment.getCourse().getcID().equals(oldCourseID)) {
                     enrolments.remove(enrollment);
@@ -104,12 +104,12 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
                 System.out.println(c1);
             }
             System.out.println("Choose a new course to add.");
-            Scanner scanner1 = new Scanner(System.in);
-            String newCourseID = inputCourseId(scanner1, newCoursesList);
+            //Scanner scanner1 = new Scanner(System.in);
+            String newCourseID = inputCourseId(input, newCoursesList);
             Course newCourse = getCourseByID(newCourseID);
 
             getAllSems();
-            String sem = inputSem(scanner1, sems);
+            String sem = inputSem(input, sems);
 
 
             StudentEnrolment newEnrollment = new StudentEnrolment(student, newCourse, sem);

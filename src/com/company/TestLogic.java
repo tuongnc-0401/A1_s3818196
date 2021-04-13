@@ -53,18 +53,15 @@ public class TestLogic {
 	public void testUpdate() {
 		EnrolmentManagement enrolmentManagement2 = new EnrolmentManagement("default.csv");
 		// check delete in Update
-		ByteArrayInputStream in = new ByteArrayInputStream("S102192\nCOSC3321\n2020B".getBytes());
+		ByteArrayInputStream in =
+				new ByteArrayInputStream("S102192\n1\nPHYS1230".getBytes());
 		System.setIn(in);
-		enrolmentManagement2.add();
-		assertEquals("Checking size of List after update", 16,
+		enrolmentManagement2.update();
+		assertEquals("Checking size of List after update", 14,
 				enrolmentManagement2.getNumberEnrollments());
 
 
-		ByteArrayInputStream in1 = new ByteArrayInputStream("2".getBytes());
-		System.setIn(in1);
-		enrolmentManagement2.delete();
-		assertEquals("Checking size of List after update", 15,
-				enrolmentManagement2.getNumberEnrollments());
+
 	}
 
 	@Test
