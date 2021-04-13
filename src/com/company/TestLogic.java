@@ -130,40 +130,74 @@ public class TestLogic {
 
 	@Test
 	public void	testGetSID(){
-
+		assertEquals("S102732",student.getsID());
 	}
-//	@Test
-//	 public void testFindMax() {
-//		System.out.println("Test find Max");
-//		assertEquals(4,Calculation.findMax(new int[]{1,3,4,2}));
-//	     	assertTrue(Calculation.findMax(new int[]{-12,-1,-3,-4,-2}) == -1);
-//	     	assertFalse(Calculation.findMax(new int[]{-12,-1,-3,-4,-2}) == -3);
-//	}
-//
-//	@Test
-//	public void testCube(){
-//        	System.out.println("Test Cube");
-//        	assertEquals(27,obj.cube(3));
-//	}
-//
-//	@Test(expected = NullPointerException.class)
-//	public void testCubeInvalidFormat() {
-//		System.out.println("Test Cube Exception");
-//		Integer a = null;
-//		obj.cube(a);
-//	}
-//
-//	@Test
-//	public void testGetInput() {
-//		System.out.println("Test getInput");
-//		ByteArrayInputStream in = new ByteArrayInputStream("My string".getBytes());
-//		System.setIn(in);
-//		assertEquals("My string", obj.getInput());
-//		in = new ByteArrayInputStream("My string1".getBytes());
-//		System.setIn(in);
-//		assertEquals("My string1", obj.getInput());
-//
-//		// optionally, reset to its original
-//		System.setIn(sysInBackup);
-//	}
+
+	@Test
+	public void	testSetSID(){
+		student.setsID("S102733");
+		assertEquals("S102733",student.getsID());
+	}
+
+	@Test
+	public void	testGetsName(){
+		assertEquals("Mark Duong",student.getsName());
+	}
+
+	@Test
+	public void	testSetsName(){
+		student.setsName("Nguyen Van A");
+		assertEquals("Nguyen Van A",student.getsName());
+	}
+
+	@Test
+	public void	testGetsDOB(){
+		assertEquals("8/28/2001",student.getsDOB());
+	}
+
+	@Test
+	public void	testSetsDOB(){
+		student.setsDOB("01/01/1998");
+		assertEquals("01/01/1998",student.getsDOB());
+	}
+
+	/**
+	 * Test class COURSE
+	 */
+	// test getter setter of cID
+	@Test
+	public void	testGetcID(){
+		assertEquals("COSC4030",course.getcID());
+	}
+
+	@Test
+	public void	testSetcID(){
+		course.setcID("AAA10101");
+		assertEquals("AAA10101",course.getcID());
+	}
+
+	// test getter, setter of cName
+	@Test
+	public void	testGetcName(){
+		assertEquals("Theory of Computation",course.getcName());
+	}
+
+	@Test
+	public void	testSetcName(){
+		course.setcName("Intro to IT");
+		assertEquals("Intro to IT",course.getcName());
+	}
+
+	// test getter, setter of numOfCredits
+	@Test
+	public void	testGetNumOfCredits(){
+		assertEquals(5,course.getNumOfCredits());
+	}
+
+	@Test
+	public void	testSetNumOfCredits(){
+		course.setNumOfCredits(12);
+		assertEquals(12,course.getNumOfCredits());
+	}
+
 }
