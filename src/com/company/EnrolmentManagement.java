@@ -17,6 +17,9 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
         String fileName = inputFileName();
         loadFile(fileName);
     }
+    public EnrolmentManagement(String fileName) {
+        loadFile(fileName);
+    }
 
     /**
      * add a new enrollment into system
@@ -252,7 +255,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
      * @param line: content to write to file
      * @param append: continue to write or write from beginning
      */
-    public static void writeToFile(String fileName, String line, boolean append) {
+    private static void writeToFile(String fileName, String line, boolean append) {
         PrintWriter output = null;
         try {
             output = new PrintWriter(new FileWriter(fileName, append));
@@ -271,8 +274,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
      * @param enrolment
      * @return true if enrollment is already in system, false if not.
      */
-    private boolean checkDuplicate(StudentEnrolment enrolment) {
-
+    public boolean checkDuplicate(StudentEnrolment enrolment) {
         for (StudentEnrolment se : enrolments) {
             if (se.getStudent().getsID().equals(enrolment.getStudent().getsID()) && se.getSemester().equals(enrolment.getSemester()) && se.getCourse().getcID().equals(enrolment.getCourse().getcID())) {
                 return false;
@@ -600,5 +602,12 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
             System.out.println("!! This student id is not in System, please enter again!! ");
 
         }
+    }
+
+    /**
+     * get number of enrollments
+     */
+    public int getNumberEnrollments(){
+        return getAll().size();
     }
 }

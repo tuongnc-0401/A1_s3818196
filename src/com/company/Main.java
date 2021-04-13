@@ -24,8 +24,8 @@ public class Main {
         Scanner input = new Scanner(System.in);
         // ask user to choose option
         String number = input.nextLine().trim();
-        while (!number.equals("1") && !number.equals("2") && !number.equals(3)) {
-            System.out.println("Your input is incorrect! Please choose a number from 1 to 4!");
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3")) {
+            System.out.println("Your input is incorrect! Please choose a number from 1 to 3!");
             System.out.print("Choose number (1-3): ");
             number = input.nextLine().trim();
         }
@@ -61,7 +61,7 @@ public class Main {
         System.out.print("Choose number (1-6): ");
         Scanner input = new Scanner(System.in);
         String number = input.nextLine().trim();
-        while (!number.equals("1") && !number.equals("2") && !number.equals(3) && !number.equals(
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals(
                 "4") && !number.equals("5") && !number.equals("6")) {
             System.out.println("Your input is incorrect! Please choose a number from 1 to 6!");
             System.out.print("Choose number (1-6): ");
@@ -108,7 +108,7 @@ public class Main {
         System.out.print("Choose number (1-5): ");
         Scanner input = new Scanner(System.in);
         String number = input.nextLine();
-        while (!number.equals("1") && !number.equals("2") && !number.equals(3) && !number.equals(
+        while (!number.equals("1") && !number.equals("2") && !number.equals("3") && !number.equals(
                 "4") && !number.equals("5")) {
             System.out.println("Your input is incorrect! Please choose a number from 1 to 5!");
             System.out.print("Choose number (1-5): ");
