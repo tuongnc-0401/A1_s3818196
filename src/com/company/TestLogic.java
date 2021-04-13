@@ -12,9 +12,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestLogic {
-	private static Student student = new Student("S102732", "Mark Duong", "8/28/2001");
-	private static Course course = new Course("COSC4030", "Theory of Computation", 5);
 	private static EnrolmentManagement enrolmentManagement = new EnrolmentManagement("default.csv");
+	private static Student student = new Student("S102732", "Mark Duong", "8/28/2001");
+	private static Course course = new Course("COSC4030", "Theory of Computation", 12);
+	private static StudentEnrolment enrolment = new StudentEnrolment(student,course,"2020C");
 	InputStream sysInBackup = System.in;
 	
 	@BeforeClass
@@ -82,10 +83,6 @@ public class TestLogic {
 
 	@Test
 	public void testGetOne() {
-		Student student = new Student("S102732", "Mark Duong", "8/28/2001");
-		Course course = new Course("COSC4030", "Theory of Computation", 5);
-
-		StudentEnrolment enrolment = new StudentEnrolment(student,course,"2020C");
 		assertEquals(enrolment.toString(),enrolmentManagement.getOne(1).toString());
 	}
 
@@ -95,13 +92,7 @@ public class TestLogic {
 
 	}
 
-	@Test
-	public void testCheckDuplicate(){
 
-
-		StudentEnrolment enrolment = new StudentEnrolment(student,course,"2020C");
-		assertTrue(enrolmentManagement.checkDuplicate(enrolment) == false);
-	}
 
 	@Test
 	public void testPrintAllCourseInOneSem() {
@@ -196,8 +187,63 @@ public class TestLogic {
 
 	@Test
 	public void	testSetNumOfCredits(){
-		course.setNumOfCredits(12);
-		assertEquals(12,course.getNumOfCredits());
+		course.setNumOfCredits(5);
+		assertEquals(5,course.getNumOfCredits());
 	}
 
+	@Test
+	public void testToStringCourse(){
+		assertEquals("AAA10101 Theory of Computation 5", course.toString());
+	}
+
+	/**
+	 * Test Student Enrollment
+	 */
+	private static Student student1 = new Student("S102732", "Mark Duong", "8/28/2001");
+	private static Course course1 = new Course("COSC4030", "Theory of Computation", 12);
+	private static StudentEnrolment enrolment1 = new StudentEnrolment(student1,course1,"2020C");
+
+	// test getter and setter of students property
+	@Test
+	public void	testGetSudent(){
+		assertEquals(student1.toString(),enrolment1.getStudent().toString());
+	}
+	@Test
+	public void	testSetSudent(){
+		Student student2 = new Student("S102732", "Mark Duong", "8/28/2001");
+		StudentEnrolment se = new StudentEnrolment();
+		se.setStudent(student2);
+		assertEquals(student2.toString(),se.getStudent().toString());
+	}
+
+	// test getter and setter of course property in Student Enrollment
+	@Test
+	public void	testGetCourse(){
+		assertEquals(course1.toString(),enrolment1.getCourse().toString());
+	}
+	@Test
+	public void	testSetCourse(){
+		Course course2 = new Course("ABC123", "Intro to Game", 12);
+		StudentEnrolment se = new StudentEnrolment();
+		se.setCourse(course2);
+		assertEquals(course2.toString(),se.getCourse().toString());
+	}
+
+	// test getter and setter of course property in Student Enrollment
+	@Test
+	public void	testGetSem(){
+		assertEquals("2020C",enrolment1.getSemester());
+	}
+	@Test
+	public void	testSetSem(){
+		StudentEnrolment se = new StudentEnrolment();
+		se.setSemester("2021B");
+		assertEquals("2021B",se.getSemester());
+	}
+
+	// test toString of StudentEnrollment
+	@Test
+	public void testToStringStudentEnrollment(){
+		assertEquals("Student: S102732 Mark Duong 8/28/2001. Course: COSC4030 Theory of Computation 12. Semester: 2020C",enrolment1.toString());
+	}
 }

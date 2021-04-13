@@ -274,7 +274,7 @@ public class EnrolmentManagement implements StudentEnrolmentManager {
      * @param enrolment
      * @return true if enrollment is already in system, false if not.
      */
-    public boolean checkDuplicate(StudentEnrolment enrolment) {
+    private boolean checkDuplicate(StudentEnrolment enrolment) {
         for (StudentEnrolment se : enrolments) {
             if (se.getStudent().getsID().equals(enrolment.getStudent().getsID()) && se.getSemester().equals(enrolment.getSemester()) && se.getCourse().getcID().equals(enrolment.getCourse().getcID())) {
                 return false;
